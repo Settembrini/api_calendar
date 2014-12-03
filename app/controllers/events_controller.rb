@@ -79,7 +79,7 @@ class EventsController < ApplicationController
         respond_to do |format|
             if @event.update(event_params)
                 #format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-                format.json { render xml: @event, :include =>[:themes], status: :ok, location: @event }
+                format.json { render json: @event, :include =>[:themes], status: :ok, location: @event }
                 format.xml { render xml: @event, :include =>[:themes], status: :ok }
                 else
                 #format.html { render :edit }

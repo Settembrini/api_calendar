@@ -73,7 +73,11 @@ class ThemesController < ApplicationController
           @event = Event.find(params[:event_id])
           t = Theme.find(params[:id])
           @event.themes.delete(t)
-          render :xml => @event, :include =>[:themes]
+          respond_to do |format|
+              #format.html { redirect_to themes_url, notice: 'Theme was successfully destroyed.' }
+              format.json { render :json => @event, :include =>[:themes] }
+              format.xml { render :xml => @event, :include =>[:themes] }
+          end
       else
         @theme.destroy
         respond_to do |format|
