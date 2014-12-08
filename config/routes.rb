@@ -1,22 +1,17 @@
 Rails.application.routes.draw do
-    root 'events#index'
+    
+    root 'events#index', defaults: { format: 'xml' }
+    
     resources :events, defaults: { format: 'xml' }
     
-    resources :locations, defaults: { format: 'xml' }
-    
-    resources :organizers, defaults: { format: 'xml' }
-    
-    resources :themes, defaults: { format: 'xml' }
-    
-    resources :themes, :locations, :organizers do
-        resources :events, defaults: { format: 'xml' }
+    resources :themes, :locations, :organizers , defaults: { format: 'xml' } do
+        resources :events, only: [:index],  defaults: { format: 'xml' }
         #get 'search' , on: :collection
     end
     resources :events do
         resources :themes, only: [:destroy]
     end
     
-    #get '/events/:id/themes/:id' => 'events#deleteThema'
     
     
     #Überprüft ob das Datum richtig ist. Z.B.: Kein 31.02.2014
@@ -39,9 +34,9 @@ get '/events/:year/:month(/:day)' => 'events#search', constraints: {
     year:       /\d{4}/,
     month:      /\d{1,2}/,
     day:        /\d{1,2}/
-}#, constraints: ValidDateConstraint.new
+}, constraints: ValidDateConstraint.new
 
-get '*path', :to => 'application#routing_error'
+get '*path', :to => 'application#routing_error', defaults: { format: 'xml' }
 
 # The priority is based upon order of creation: first created -> highest priority.
 # See how all your routes lay out with "rake routes".

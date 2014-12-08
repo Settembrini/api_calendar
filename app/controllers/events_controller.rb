@@ -36,7 +36,11 @@ class EventsController < ApplicationController
         if @events.length >0
             render :xml => @events, :include =>[:themes]
             else
-            render xml: { error: "Keine Veranstaltungen in dem Zeitraum gefunden" }, status: 200
+            respond_to do |format|
+                #format.html
+                format.json { render json: { error: "Keine Veranstaltungen in dem Zeitraum gefunden" }, status: 200}
+                format.xml { render xml: { error: "Keine Veranstaltungen in dem Zeitraum gefunden" }, status: 200 }
+            end
         end
     end
     

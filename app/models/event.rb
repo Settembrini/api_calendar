@@ -22,6 +22,7 @@ class Event < ActiveRecord::Base
     def self.filterEventsRessource(params)
     #e = Event.find(params[:id])
         if(!params[:location_id].nil?)
+            #render xml: { message: " Location:#{params[:location_id]}" }, status: 200
             @events = Event.where(:location_id => params[:location_id])
         end
         if(!params[:organizer_id].nil?)
