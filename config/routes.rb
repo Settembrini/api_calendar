@@ -4,10 +4,13 @@ Rails.application.routes.draw do
     
     resources :events, defaults: { format: 'xml' }
     
+    #Nested Ressources z.B. /themes/1/events
     resources :themes, :locations, :organizers , defaults: { format: 'xml' } do
         resources :events, only: [:index],  defaults: { format: 'xml' }
         #get 'search' , on: :collection
     end
+    
+    #Nur um Theme aus Event zu löschen
     resources :events do
         resources :themes, only: [:destroy]
     end
@@ -30,12 +33,17 @@ Rails.application.routes.draw do
 end
 end
 
-get '/events/:year/:month(/:day)' => 'events#search', constraints: {
+#Rout auf Filter nach datum
+get '/events/:year/:month(/:day)' => 'events#dateFilter', constraints: {
     year:       /\d{4}/,
     month:      /\d{1,2}/,
     day:        /\d{1,2}/
 }, constraints: ValidDateConstraint.new
 
+#Rout auf WADL
+get '/wadl', :to => redirect('/api_calendar.wadl')
+
+#Error für nicht vorhanden Path
 get '*path', :to => 'application#routing_error', defaults: { format: 'xml' }
 
 # The priority is based upon order of creation: first created -> highest priority.

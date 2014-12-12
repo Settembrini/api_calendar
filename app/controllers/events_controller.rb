@@ -1,14 +1,18 @@
 class EventsController < ApplicationController
     before_action :set_event, only: [:show, :edit, :update, :destroy]
     skip_before_filter :verify_authenticity_token
+    
     # GET /events.xml
     # GET /events.json
+    #include von themes umd die Themen des Events auch gleich mit zu zeigen
     def index
         @events = Event.all
+        
+        #Falls ein Aufruf wie z.B. location/id/events geschieht, werden die Events nach der Ressource gefiltert
         if(params[:location_id] || params[:organizer_id] || params[:theme_id])
-            #render xml: { error: "Keine Verasdfraum gefunden" }, status: 200
             @events =Event.filterEventsRessource(params)
         end
+        
         respond_to do |format|
             #format.html
             format.json { render :json => @events, :include =>[:themes] }
@@ -27,14 +31,18 @@ class EventsController < ApplicationController
     end
     
     #Benutzt die Methode filterEventsPeriod um nach dem Zeitraum zu filtern
-    def search
+    def dateFilter
         month = (params[:month] || Time.zone.now.month).to_i
         year = (params[:year] || Time.zone.now.year).to_i
         day = (params[:day] || nil).to_i
-        #render xml: { message: "Eingabe: Jahr: #{year} Monat: #{month} Tag: #{day}" }, status: 200
+        
         @events = Event.filterEventsPeriod(year, month, day)
         if @events.length >0
-            render :xml => @events, :include =>[:themes]
+            respond_to do |format|
+                #format.html
+                format.json { render :json => @events, :include =>[:themes], status: 200}
+                format.xml { render :xml => @events, :include =>[:themes], status: 200 }
+            end
             else
             respond_to do |format|
                 #format.html
@@ -56,14 +64,15 @@ class EventsController < ApplicationController
     # POST /events.xml
     # POST /events.json
     def create
-        #render xml: { error: "#{params[:event][:themes].first[:id]}" }, status: 200
-        #return
         @event = Event.new(event_params)
+        
+        #Falls Themen mit gepostet wurden, werden diese dem Event hinzugefügt
         if(params[:event][:themes])
             params[:event][:themes].each do |t|
                 @event.themes << Theme.find(t[:id])
             end
         end
+        
         respond_to do |format|
             if @event.save
                 #format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -117,6 +126,5 @@ class EventsController < ApplicationController
     def event_params
         #render xml: { error: "#{params}" }, status: 200
         params.require(:event).permit(:title, :description, :link, :location_id, :organizer_id, :start_time, :end_time, :themes_attributes => [:id, :name])
-        #params.require(:event).permit(:title, :description, :location_id, :organizer_id, :theme_id, :start_time, :end_time) if params[:event]
     end
 end

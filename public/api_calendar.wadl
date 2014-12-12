@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <doc xml:lang="en" title="api_calendar"/>
+    <resources base="http://localhost:3000/">
+        <resource path="events">
+            <method name="GET">
+                <response>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </response>
+            </method>
+            <method name="POST">
+                <request>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </request>
+                <response>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </response>
+            </method>
+            <resource path="{eventId}">
+                <param required="true" style="template" name="eventId" type="xs:int"/>
+                <method name="GET">
+                    <response>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+                <method name="DELETE"/>
+                <resource path="themes/{themeId}">
+                    <param required="true" style="template" name="themeId" type="xs:int"/>
+                    <method name="DELETE">
+                        <response>
+                            <representation mediaType="application/xml"/>
+                            <representation mediaType="application/json"/>
+                        </response>
+                    </method>
+                </resource>
+            </resource>
+            <resource path="{yyyy}/{mm}/{dd}">
+                <param name="yyyy" type="xs:gYear" required="true" style="template"/>
+                <param name="mm" type="xs:gMonth" required="true" style="template"/>
+                <param name="dd" type="xs:gDay" required="false" style="template"/>
+                <method name="GET">
+                    <response>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+            </resource>
+        <resource path="themes">
+            <method name="GET">
+                <response>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </response>
+            </method>
+            <method name="POST">
+                <request>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </request>
+                <response>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </response>
+            </method>
+            <resource path="{themeId}">
+                <param required="true" style="template" name="themeId" type="xs:int"/>
+                <method name="GET">
+                    <response>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+                <method name="DELETE"/>
+                <resource path="events"> 
+                    <method name="GET">
+                        <response>
+                            <representation mediaType="application/xml"/>
+                            <representation mediaType="application/json"/>
+                        </response>
+                    </method>
+                </resource> 
+            </resource>
+        </resource>
+        <resource path="locations">
+            <method name="GET">
+                <response>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </response>
+            </method>
+            <method name="POST">
+                <request>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </request>
+                <response>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </response>
+            </method>
+            <resource path="{locationId}">
+                <param required="true" style="template" name="locationId" type="xs:int"/>
+                <method name="GET">
+                    <response>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+                <method name="DELETE"/>
+                <resource path="events"> 
+                    <method name="GET">
+                        <response>
+                            <representation mediaType="application/xml"/>
+                            <representation mediaType="application/json"/>
+                        </response>
+                    </method>
+                </resource> 
+            </resource>
+        </resource>
+        <resource path="organazirs">
+            <method name="GET">
+                <response>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </response>
+            </method>
+            <method name="POST">
+                <request>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </request>
+                <response>
+                    <representation mediaType="application/xml"/>
+                    <representation mediaType="application/json"/>
+                </response>
+            </method>
+            <resource path="{organazirId}">
+                <param required="true" style="template" name="organazirId" type="xs:int"/>
+                <method name="GET">
+                    <response>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+                <method name="DELETE"/>
+                <resource path="events"> 
+                    <method name="GET">
+                        <response>
+                            <representation mediaType="application/xml"/>
+                            <representation mediaType="application/json"/>
+                        </response>
+                    </method>
+                </resource> 
+            </resource>
+        </resource>
+    </resources>
+</application>

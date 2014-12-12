@@ -16,18 +16,23 @@ class ApplicationController < ActionController::Base
         end
         #render xml: { error: "#error" }, status: 404
     end
+    
     rescue_from(ActionController::UnknownFormat) do |e|
-    render xml: { error: "Unknown Format. Controller: '#{params[:controller]}' don't support Format: '#{params[:format]}'"}, status: 406
+        render xml: { error: "Unknown Format. Controller: '#{params[:controller]}' don't support Format: '#{params[:format]}'"}, status: 406
+    end
+
+    rescue_from(ActionController::ParameterMissing) do |parameter_missing_exception|
+        respond_to do |format|
+            format.json { render json: { error: "Action failed: #{params[:action]}. Required parameter missing: #{parameter_missing_exception.param}"}, status: 400}
+            format.xml { render xml: { error: "Action failed: #{params[:action]}. Required parameter missing: #{parameter_missing_exception.param}"}, status: 400}
+        end
     end
 
     
     def routing_error(error = 'Routing error', status = :not_found, exception=nil)
         respond_to do |format|
-            # if @event.delete(event_params)
-            #format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
             format.json { render json: { error: "Routing error. Path '/#{params[:path]}' not found"}, status: 404 }
             format.xml { render xml: { error: "Routing error. Path '/#{params[:path]}' not found"}, status: 404}
-            # end
         end
     end
 end
