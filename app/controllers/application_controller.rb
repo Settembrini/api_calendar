@@ -6,15 +6,11 @@ class ApplicationController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     skip_before_filter :verify_authenticity_token
     
-    def not_found
-        #respond_to do |format|
-        #format.xml { render xml: "Ressource with id: '#{params[:id]}' not found", status: :not_found}
-        if(params[:id])
-            render xml: { error: "#{params[:controller]} with id: '#{params[:id]}' not found" }, status: 404
-            else
-            render xml: { error: "Theme not found" }, status: 404
+    def not_found(error)
+        respond_to do |format|
+            format.json { render :json => {:error => error.message}, :status => :not_found}
+            format.xml { render :xml => {:error => error.message}, :status => :not_found}
         end
-        #render xml: { error: "#error" }, status: 404
     end
     
     rescue_from(ActionController::UnknownFormat) do |e|

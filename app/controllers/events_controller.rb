@@ -91,6 +91,13 @@ class EventsController < ApplicationController
     def update
         respond_to do |format|
             if @event.update(event_params)
+                if(params[:event][:themes])
+                    params[:event][:themes].each do |t|
+                        if(!@event.themes.include?(Theme.find(t[:id])))
+                            @event.themes << Theme.find(t[:id])
+                        end
+                    end
+                end
                 #format.html { redirect_to @event, notice: 'Event was successfully updated.' }
                 format.json { render json: @event, :include =>[:themes], status: :ok, location: @event }
                 format.xml { render xml: @event, :include =>[:themes], status: :ok }
