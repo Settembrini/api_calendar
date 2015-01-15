@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+    include Swagger::Blocks
     belongs_to :location
     validates :location, presence: {:message => "not found" }, if: 'location_id.present?'
     belongs_to :organizer
@@ -8,7 +9,55 @@ class Event < ActiveRecord::Base
     # validates :theme, :presence => true, if: 'theme_id.present?'
     
     
-    
+    #:themes_attributes => [:id, :name]
+    #Swagger Model für die Api Doku
+    swagger_model :Event do
+    key :id, :Event
+    key :required, [:id]
+    property :id do
+    key :type, :integer
+    key :format, :int64
+    key :description, 'unique identifier for the Theme'
+end
+property :title do
+    key :type, :string
+    key :description, 'Titel des Themas'
+end
+property :description do
+    key :type, :string
+    key :description, 'Titel des Themas'
+end
+property :link do
+    key :type, :string
+    key :description, 'Titel des Themas'
+end
+property :location_id do
+    key :type, :string
+    key :description, 'Titel des Themas'
+end
+property :organizer_id do
+    key :type, :string
+    key :description, 'Titel des Themas'
+end
+property :start_time do
+    key :type, :dateTime
+    key :description, 'Titel des Themas'
+end
+property :end_time do
+    key :type, :dateTime
+    key :description, 'Titel des Themas'
+end
+property :themes do
+    key :type, :array
+    items do
+        key :type, :Theme
+    end
+end
+end
+
+
+
+
     #Filtert die Events nach dem Jahr und Monat. Optional Tag
     def self.filterEventsPeriod(year, month, day)
         if day !=0
@@ -36,4 +85,5 @@ class Event < ActiveRecord::Base
         end
         @events
     end
+
 end

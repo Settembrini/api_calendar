@@ -193,6 +193,40 @@ swagger_api_root :themes do
     end
 end
 
+swagger_api_root :themes do
+    api do
+        key :path, '/themes/{themeId}/events'
+        operation do
+            key :method, 'GET'
+            key :summary, 'Get all Events in the Theme'
+            key :notes, 'Get all Events on a theme based on ID'
+            key :type, :array
+            key :nickname, :getThemeEvents
+            items do
+                key :'$ref', :Event
+            end
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :path
+                key :name, :themeId
+                key :description, 'ID of theme'
+                key :required, true
+                key :type, :integer
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Theme not found'
+            end
+        end
+    end
+end
 
 
   # GET /themes

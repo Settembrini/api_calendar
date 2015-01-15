@@ -194,6 +194,41 @@ swagger_api_root :organizers do
     end
 end
 
+swagger_api_root :organizers do
+    api do
+        key :path, '/organizers/{organizerId}/events'
+        operation do
+            key :method, 'GET'
+            key :summary, 'Get all Events in the Organizer'
+            key :notes, 'Get all Events on a organizer based on ID'
+            key :type, :array
+            key :nickname, :getOrganizerEvents
+            items do
+                key :'$ref', :Event
+            end
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :path
+                key :name, :organizerId
+                key :description, 'ID of organizer'
+                key :required, true
+                key :type, :integer
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Organizer not found'
+            end
+        end
+    end
+end
+
   # GET /organizers.xml
   # GET /organizers.json
   def index

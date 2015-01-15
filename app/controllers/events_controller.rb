@@ -196,11 +196,11 @@ end
 
 swagger_api_root :events do
     api do
-        key :path, '/events/{year}{month}{day}'
+        key :path, '/events/{year}/{month}'
         operation do
             key :method, 'GET'
             key :summary, 'Get Events within the date '
-            key :notes, 'Returns all events based on denoted year, month and optional day'
+            key :notes, 'Returns all events based on denoted year, month'
             key :type, :Event
             key :nickname, :filterEventDate
             items do
@@ -219,11 +219,57 @@ swagger_api_root :events do
                 key :name, :year
                 key :description, 'Year'
                 key :required, true
-                key :type, :integer
+                key :type, :string
             end
             parameter do
                 key :paramType, :path
+                key :name, :month
+                key :description, 'Month'
+                key :required, true
+                key :type, :string
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Event not found'
+            end
+        end
+    end
+end
+
+swagger_api_root :events do
+    api do
+        key :path, '/events/{year}/{month}/{day}'
+        operation do
+            key :method, 'GET'
+            key :summary, 'Get Events within the date '
+            key :notes, 'Returns all events based on denoted year, month and day'
+            key :type, :Event
+            key :nickname, :filterEventDateWithDay
+            items do
+                key :'$ref', :Event
+            end
+            key :produces, [
+            'application/json',
+            'application/xml',
+            ]
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :path
                 key :name, :year
+                key :description, 'Year'
+                key :required, true
+                key :type, :string
+            end
+            parameter do
+                key :paramType, :path
+                key :name, :month
                 key :description, 'Month'
                 key :required, true
                 key :type, :string

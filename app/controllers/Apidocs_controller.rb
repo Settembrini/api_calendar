@@ -10,14 +10,18 @@ class ApidocsController < ActionController::Base
             key :path, '/locations'
             key :description, 'Operations about locations'
         end
-api do
-    key :path, '/organizers'
-    key :description, 'Operations about organizers'
-end
-api do
-    key :path, '/themes'
-    key :description, 'Operations about themes'
-end
+        api do
+            key :path, '/organizers'
+            key :description, 'Operations about organizers'
+        end
+        api do
+            key :path, '/themes'
+            key :description, 'Operations about themes'
+        end
+        api do
+            key :path, '/events'
+            key :description, 'Operations about events'
+        end
     end
 
 # A list of all classes that have swagger_* declarations.
@@ -28,6 +32,8 @@ OrganizersController,
 Organizer,
 ThemesController,
 Theme,
+EventsController,
+Event,
 self,
 ].freeze
 

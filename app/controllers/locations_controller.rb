@@ -197,6 +197,41 @@ swagger_api_root :locations do
     end
 end
 
+swagger_api_root :locations do
+    api do
+        key :path, '/locations/{locationId}/events'
+        operation do
+            key :method, 'GET'
+            key :summary, 'Get all Events in the Location'
+            key :notes, 'Get all Events on a location based on ID'
+            key :type, :array
+            key :nickname, :getLocationEvents
+            items do
+                key :'$ref', :Event
+            end
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :path
+                key :name, :locationId
+                key :description, 'ID of location that'
+                key :required, true
+                key :type, :integer
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Location not found'
+            end
+        end
+    end
+end
+
 
     # GET /locations
     # GET /locations.json
