@@ -4,6 +4,12 @@ Rails.application.routes.draw do
     
     resources :events, defaults: { format: 'xml' }
     
+    
+    #SWAGGER-UI
+    get '/api' => redirect('/swagger/dist/index?url=/apidocs')
+    resources :apidocs, only: [:index, :show]
+    
+    
     #Nested Ressources z.B. /themes/1/events
     resources :themes, :locations, :organizers , defaults: { format: 'xml' } do
         resources :events, only: [:index],  defaults: { format: 'xml' }

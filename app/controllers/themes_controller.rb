@@ -2,6 +2,199 @@ class ThemesController < ApplicationController
   before_action :set_theme, only: [:show, :edit, :update, :destroy]
   skip_before_filter :verify_authenticity_token
 
+#SWAGGER Api Doc
+swagger_api_root :themes do
+key :swaggerVersion, '1.2'
+key :apiVersion, '1.0.0'
+key :basePath, 'http://localhost:3000/'
+key :resourcePath, '/themes'
+api do
+key :path, '/themes/{themeId}'
+operation do
+key :method, 'GET'
+key :summary, 'Find theme by ID'
+key :notes, 'Returns a theme based on ID'
+key :type, :Theme
+key :nickname, :getThemeById
+items do
+key :'$ref', :Theme
+end
+key :produces, [
+'application/json',
+'application/xml',
+]
+key :consumes, [
+'application/json',
+'application/xml',
+]
+parameter do
+    key :paramType, :path
+    key :name, :themeId
+    key :description, 'ID of theme that needs to be fetched'
+    key :required, true
+    key :type, :integer
+end
+response_message do
+    key :code, 400
+    key :message, 'Invalid ID supplied'
+end
+response_message do
+    key :code, 404
+    key :message, 'Theme not found'
+end
+end
+end
+end
+
+swagger_api_root :themes do
+    api do
+        key :path, '/themes'
+        operation do
+            key :method, 'GET'
+            key :summary, 'Get themes'
+            key :notes, 'Returns all themes'
+            key :type, :array
+            key :nickname, :getThemes
+            items do
+                key :'$ref', :Theme
+            end
+            key :produces, [
+            'application/json',
+            'application/xml',
+            ]
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Theme not found'
+            end
+        end
+    end
+end
+
+swagger_api_root :themes do
+    api do
+        key :path, '/themes'
+        operation do
+            key :method, 'POST'
+            key :summary, 'Find theme by ID'
+            key :notes, 'Returns a theme based on ID'
+            key :type, :Theme
+            key :nickname, :postTheme
+            items do
+                key :'$ref', :Theme
+            end
+            key :produces, [
+            'application/json',
+            'application/xml',
+            ]
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :body
+                key :name, :body
+                key :description, 'Theme object that needs to be added'
+                key :required, false
+                key :type, :Theme
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Theme not found'
+            end
+        end
+    end
+end
+swagger_api_root :themes do
+    api do
+        key :path, '/themes/{themeId}'
+        operation do
+            key :method, 'PUT'
+            key :summary, 'Update a Theme'
+            key :notes, 'Returns a theme based on ID'
+            key :type, :Theme
+            key :nickname, :postTheme
+            items do
+                key :'$ref', :Theme
+            end
+            key :produces, [
+            'application/json',
+            'application/xml',
+            ]
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :path
+                key :name, :themeId
+                key :description, 'ID of theme that needs to be updated'
+                key :required, true
+                key :type, :integer
+            end
+            parameter do
+                key :paramType, :body
+                key :name, :body
+                key :description, 'Theme object that needs to be added'
+                key :required, false
+                key :type, :Theme
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Theme not found'
+            end
+        end
+    end
+end
+
+swagger_api_root :themes do
+    api do
+        key :path, '/themes/{themeId}'
+        operation do
+            key :method, 'DELETE'
+            key :summary, 'Delete a Theme'
+            key :notes, 'Delete a theme based on ID'
+            key :nickname, :deleteTheme
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :path
+                key :name, :themeId
+                key :description, 'ID of Theme that needs to be deleted'
+                key :required, true
+                key :type, :integer
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Theme not found'
+            end
+        end
+    end
+end
+
+
+
   # GET /themes
   # GET /themes.json
   def index

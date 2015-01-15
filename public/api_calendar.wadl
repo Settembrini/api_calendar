@@ -4,12 +4,14 @@
     <resources base="http://localhost:3000/">
         <resource path="events">
             <method name="GET">
+                <doc>Gibt alle gespeicherten Events aus</doc>
                 <response>
                     <representation mediaType="application/xml"/>
                     <representation mediaType="application/json"/>
                 </response>
             </method>
             <method name="POST">
+                <doc>Das geschickte Event wird gespeichert</doc>
                 <request>
                     <representation mediaType="application/xml"/>
                     <representation mediaType="application/json"/>
@@ -22,15 +24,30 @@
             <resource path="{eventId}">
                 <param required="true" style="template" name="eventId" type="xs:int"/>
                 <method name="GET">
+                    <doc>Gibt alle das Event unter der mitgeschickten ID aus</doc>
                     <response>
                         <representation mediaType="application/xml"/>
                         <representation mediaType="application/json"/>
                     </response>
                 </method>
-                <method name="DELETE"/>
+                <method name="PUT">
+                    <doc>Verändert das Event, mit der mitgeschickten ID, mit den zu änderten Daten</doc>
+                    <request>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </request>
+                    <response>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+                <method name="DELETE">
+                    <doc>Löscht das Event, welches die mitgeschickte ID besitzt aus der DB</doc>
+                </method>
                 <resource path="themes/{themeId}">
                     <param required="true" style="template" name="themeId" type="xs:int"/>
                     <method name="DELETE">
+                        <doc>Löscht das Theme aus dem Event, welches die mitgeschickte ID besitzt</doc>
                         <response>
                             <representation mediaType="application/xml"/>
                             <representation mediaType="application/json"/>
@@ -43,14 +60,17 @@
                 <param name="mm" type="xs:gMonth" required="true" style="template"/>
                 <param name="dd" type="xs:gDay" required="false" style="template"/>
                 <method name="GET">
+                    <doc>Gibt alle gespeicherten Events aus dem angegebenen Zeitraum aus</doc>
                     <response>
                         <representation mediaType="application/xml"/>
                         <representation mediaType="application/json"/>
                     </response>
                 </method>
             </resource>
+        </resource>
         <resource path="themes">
             <method name="GET">
+                <doc>Gibt alle gespeicherten Themen aus</doc>
                 <response>
                     <representation mediaType="application/xml"/>
                     <representation mediaType="application/json"/>
@@ -69,14 +89,28 @@
             <resource path="{themeId}">
                 <param required="true" style="template" name="themeId" type="xs:int"/>
                 <method name="GET">
+                    <doc>Gibt das gespeicherte Thema, welches die mitgeschickte ID besitzt, aus</doc>
                     <response>
                         <representation mediaType="application/xml"/>
                         <representation mediaType="application/json"/>
                     </response>
                 </method>
-                <method name="DELETE"/>
+                <method name="PUT">
+                    <request>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </request>
+                    <response>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+                <method name="DELETE">
+                    <doc>Löscht das Thema, welches die mitgeschickte ID besitzt aus der DB</doc>
+                </method>
                 <resource path="events"> 
                     <method name="GET">
+                        <doc>Gibt alle Events aus, gefiltert nach dem Thema mit der mitgeschickte ID</doc>
                         <response>
                             <representation mediaType="application/xml"/>
                             <representation mediaType="application/json"/>
@@ -87,6 +121,7 @@
         </resource>
         <resource path="locations">
             <method name="GET">
+                <doc>Gibt alle gespeicherten Locations aus</doc>
                 <response>
                     <representation mediaType="application/xml"/>
                     <representation mediaType="application/json"/>
@@ -105,14 +140,28 @@
             <resource path="{locationId}">
                 <param required="true" style="template" name="locationId" type="xs:int"/>
                 <method name="GET">
+                    <doc>Gibt das gespeicherte Location, welches die mitgeschickte ID besitzt, aus</doc>
                     <response>
                         <representation mediaType="application/xml"/>
                         <representation mediaType="application/json"/>
                     </response>
                 </method>
-                <method name="DELETE"/>
+                <method name="PUT">
+                    <request>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </request>
+                    <response>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+                <method name="DELETE">
+                    <doc>Löscht die Location, welche die mitgeschickte ID besitzt aus der DB</doc>
+                </method>
                 <resource path="events"> 
                     <method name="GET">
+                        <doc>Gibt alle Events aus, gefiltert nach der Location mit der mitgeschickte ID</doc>
                         <response>
                             <representation mediaType="application/xml"/>
                             <representation mediaType="application/json"/>
@@ -123,6 +172,7 @@
         </resource>
         <resource path="organazirs">
             <method name="GET">
+                <doc>Gibt alle gespeicherten Organizer aus</doc>
                 <response>
                     <representation mediaType="application/xml"/>
                     <representation mediaType="application/json"/>
@@ -141,14 +191,28 @@
             <resource path="{organazirId}">
                 <param required="true" style="template" name="organazirId" type="xs:int"/>
                 <method name="GET">
+                    <doc>Gibt den gespeicherten Organizer, welcher die mitgeschickte ID besitzt, aus</doc>
                     <response>
                         <representation mediaType="application/xml"/>
                         <representation mediaType="application/json"/>
                     </response>
                 </method>
-                <method name="DELETE"/>
+                <method name="PUT">
+                    <request>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </request>
+                    <response>
+                        <representation mediaType="application/xml"/>
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+                <method name="DELETE">
+                    <doc>Löscht den Organizer, welche die mitgeschickte ID besitzt aus der DB</doc>
+                </method>
                 <resource path="events"> 
                     <method name="GET">
+                        <doc>Gibt alle Events aus, gefiltert nach dem Organizer mit der mitgeschickte ID</doc>
                         <response>
                             <representation mediaType="application/xml"/>
                             <representation mediaType="application/json"/>

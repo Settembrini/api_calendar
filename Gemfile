@@ -44,4 +44,15 @@ gem 'tzinfo-data', platforms: [:x64_mingw,:mingw, :mswin]
 #XML Parser für POST und PUT
 gem 'actionpack-xml_parser'
 
+#Swapper Test
+#gem 'grape', '~> 0.6.1'
+#gem 'grape-entity', '~> 0.4.0'
+#gem 'rack-contrib', '~> 1.1.0'
+#gem 'grape-swagger', '~> 0.7.2'
+#gem 'grape-swagger-rails',  '~> 0.0.8'
 
+# Swagger
+#gem 'swagger-docs'
+
+#Swagger Blocks
+gem 'swagger-blocks'

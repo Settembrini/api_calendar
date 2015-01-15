@@ -2,6 +2,253 @@ class EventsController < ApplicationController
     before_action :set_event, only: [:show, :edit, :update, :destroy]
     skip_before_filter :verify_authenticity_token
     
+    
+    #SWAGGER Api Doc
+    swagger_api_root :events do
+    key :swaggerVersion, '1.2'
+    key :apiVersion, '1.0.0'
+    key :basePath, 'http://localhost:3000/'
+    key :resourcePath, '/events'
+    api do
+    key :path, '/events/{eventId}'
+    operation do
+    key :method, 'GET'
+    key :summary, 'Find event by ID'
+    key :notes, 'Returns a event based on ID'
+    key :type, :Event
+    key :nickname, :getEventById
+    items do
+    key :'$ref', :Event
+end
+key :produces, [
+'application/json',
+'application/xml',
+]
+key :consumes, [
+'application/json',
+'application/xml',
+]
+parameter do
+    key :paramType, :path
+    key :name, :eventId
+    key :description, 'ID of event that needs to be fetched'
+    key :required, true
+    key :type, :integer
+end
+response_message do
+    key :code, 400
+    key :message, 'Invalid ID supplied'
+end
+response_message do
+    key :code, 404
+    key :message, 'Event not found'
+end
+end
+end
+end
+
+swagger_api_root :events do
+    api do
+        key :path, '/events'
+        operation do
+            key :method, 'GET'
+            key :summary, 'Get events'
+            key :notes, 'Returns all events'
+            key :type, :Event
+            key :nickname, :getEvents
+            items do
+                key :'$ref', :Event
+            end
+            key :produces, [
+            'application/json',
+            'application/xml',
+            ]
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Event not found'
+            end
+        end
+    end
+end
+
+swagger_api_root :events do
+    api do
+        key :path, '/events'
+        operation do
+            key :method, 'POST'
+            key :summary, 'Find event by ID'
+            key :notes, 'Returns a event based on ID'
+            key :type, :Event
+            key :nickname, :postEvent
+            items do
+                key :'$ref', :Event
+            end
+            key :produces, [
+            'application/json',
+            'application/xml',
+            ]
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :body
+                key :name, :body
+                key :description, 'Event object that needs to be added'
+                key :required, false
+                key :type, :Event
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Event not found'
+            end
+        end
+    end
+end
+swagger_api_root :events do
+    api do
+        key :path, '/events/{eventId}'
+        operation do
+            key :method, 'PUT'
+            key :summary, 'Update a Event'
+            key :notes, 'Returns a event based on ID'
+            key :type, :Event
+            key :nickname, :postEvent
+            items do
+                key :'$ref', :Event
+            end
+            key :produces, [
+            'application/json',
+            'application/xml',
+            ]
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :path
+                key :name, :eventId
+                key :description, 'ID of event that needs to be updated'
+                key :required, true
+                key :type, :integer
+            end
+            parameter do
+                key :paramType, :body
+                key :name, :body
+                key :description, 'Event object that needs to be added'
+                key :required, false
+                key :type, :Event
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Event not found'
+            end
+        end
+    end
+end
+
+swagger_api_root :events do
+    api do
+        key :path, '/events/{eventId}'
+        operation do
+            key :method, 'DELETE'
+            key :summary, 'Delete a Event'
+            key :notes, 'Delete a event based on ID'
+            key :nickname, :deleteEvent
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :path
+                key :name, :eventId
+                key :description, 'ID of Event that needs to be deleted'
+                key :required, true
+                key :type, :integer
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Event not found'
+            end
+        end
+    end
+end
+
+swagger_api_root :events do
+    api do
+        key :path, '/events/{year}{month}{day}'
+        operation do
+            key :method, 'GET'
+            key :summary, 'Get Events within the date '
+            key :notes, 'Returns all events based on denoted year, month and optional day'
+            key :type, :Event
+            key :nickname, :filterEventDate
+            items do
+                key :'$ref', :Event
+            end
+            key :produces, [
+            'application/json',
+            'application/xml',
+            ]
+            key :consumes, [
+            'application/json',
+            'application/xml',
+            ]
+            parameter do
+                key :paramType, :path
+                key :name, :year
+                key :description, 'Year'
+                key :required, true
+                key :type, :integer
+            end
+            parameter do
+                key :paramType, :path
+                key :name, :year
+                key :description, 'Month'
+                key :required, true
+                key :type, :string
+            end
+            parameter do
+                key :paramType, :path
+                key :name, :day
+                key :description, 'Day'
+                key :required, false
+                key :type, :string
+            end
+            response_message do
+                key :code, 400
+                key :message, 'Invalid ID supplied'
+            end
+            response_message do
+                key :code, 404
+                key :message, 'Event not found'
+            end
+        end
+    end
+end
+
+    
+    
     # GET /events.xml
     # GET /events.json
     #include von themes umd die Themen des Events auch gleich mit zu zeigen
