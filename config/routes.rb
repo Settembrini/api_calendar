@@ -50,7 +50,8 @@ get '/events/:year/:month(/:day)' => 'events#dateFilter', constraints: {
 get '/wadl', :to => redirect('/api_calendar.wadl')
 
 #Error für nicht vorhanden Path
-get '*path', :to => 'application#routing_error', defaults: { format: 'xml' }
+match '*path', :to => 'application#routing_error', via: :all, defaults: { format: 'xml' }
+#put '*path', :to => 'application#routing_error', defaults: { format: 'xml' }
 
 # The priority is based upon order of creation: first created -> highest priority.
 # See how all your routes lay out with "rake routes".
